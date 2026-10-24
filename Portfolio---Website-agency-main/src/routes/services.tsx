@@ -1,8 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { CtaBand, PageIntro } from "@/components/site-shell";
-import { pageMeta, services } from "@/lib/agency";
+import { Outlet, createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/services")({ head: () => pageMeta("Web design services", "Strategy, bespoke web design, development, and ongoing care for independent businesses.", "/services"), component: ServicesPage });
-function ServicesPage() { return <><PageIntro eyebrow="What we do" title="One studio. Every step." text="From positioning to launch, we bring strategy, design and development together—so every decision serves the same clear idea." /><section className="border-y border-border bg-secondary/50"><div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-24">{services.map((s, i) => <article key={s.n} className="grid gap-7 border-t border-border py-10 first:border-t-0 lg:grid-cols-[5rem_.8fr_1fr]"><span className="text-sm text-primary">{s.n}</span><h2 className="font-display text-3xl font-medium sm:text-4xl">{s.title}</h2><div><p className="text-lg leading-8 text-muted-foreground">{s.text}</p><ul className="mt-6 grid gap-2 text-sm sm:grid-cols-2">{[["Audience insight","Positioning workshop"],["Design system","Responsive prototypes"],["Modern build","Content editing"],["Priority support","Performance reviews"]][i].map(x => <li key={x} className="flex items-center gap-2"><Check className="size-4 text-primary" />{x}</li>)}</ul></div></article>)}</div></section><section className="mx-auto max-w-7xl px-5 py-20 sm:px-8"><div className="grid gap-8 lg:grid-cols-2"><h2 className="font-display text-4xl font-medium sm:text-6xl">Simple process.<br />Serious attention.</h2><div className="grid gap-5">{["Discover what matters","Define one strong direction","Design, build and refine","Launch with confidence"].map((x,i)=><div key={x} className="flex items-center gap-5 border-b border-border pb-5"><span className="text-xs text-primary">0{i+1}</span><p className="text-lg font-medium">{x}</p></div>)}<Button asChild variant="dark" className="mt-3 w-fit"><Link to="/contact">Discuss your project <ArrowUpRight /></Link></Button></div></div></section><CtaBand /></> }
+export const Route = createFileRoute("/services")({ component: ServicesLayout });
+
+function ServicesLayout() {
+  return <Outlet />;
+}

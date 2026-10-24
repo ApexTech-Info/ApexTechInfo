@@ -1,5 +1,42 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import { CtaBand, PageIntro } from "@/components/site-shell";
-import { pageMeta, testimonials } from "@/lib/agency";
-export const Route=createFileRoute("/testimonials")({head:()=>pageMeta("Client stories","Hear from small-business founders who partnered with Onda Studio to build a stronger digital presence.","/testimonials"),component:TestimonialsPage});
-function TestimonialsPage(){return <><PageIntro eyebrow="Client stories" title="Good work creates momentum." text="The best measure of a website is what happens next: more confidence, clearer conversations and healthier business growth."/><section className="border-y border-border bg-secondary/50"><div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28"><div className="grid gap-px overflow-hidden rounded-md border border-border bg-border md:grid-cols-2">{testimonials.map((t,i)=><figure key={t.name} className={`bg-background p-8 sm:p-10 ${i===0?"md:col-span-2":""}`}><span className="font-display text-5xl text-primary">“</span><blockquote className={`mt-3 font-display font-medium leading-tight ${i===0?"max-w-4xl text-3xl sm:text-5xl":"text-2xl sm:text-3xl"}`}>{t.quote}</blockquote><figcaption className="mt-8 text-sm"><strong>{t.name}</strong><span className="ml-2 text-muted-foreground">{t.role}</span></figcaption></figure>)}</div></div></section><section className="mx-auto max-w-7xl px-5 py-20 sm:px-8"><div className="grid grid-cols-2 gap-8 sm:grid-cols-4">{[["12+","years combined"],["40+","businesses launched"],["4.9/5","client feedback"],["72%","from referrals"]].map(([n,l])=><div key={l}><strong className="font-display text-4xl font-medium text-primary">{n}</strong><p className="mt-2 text-sm text-muted-foreground">{l}</p></div>)}</div></section><CtaBand/></>}
+import { pageMeta } from "@/lib/site-config";
+
+export const Route = createFileRoute("/testimonials")({
+  head: () =>
+    pageMeta(
+      "Client Stories",
+      "Client stories will be shared with permission and verified attribution. Learn how our team approaches projects.",
+      "/testimonials",
+    ),
+  component: TestimonialsPage,
+});
+
+function TestimonialsPage() {
+  return (
+    <>
+      <PageIntro
+        eyebrow="Client stories"
+        title="Good work deserves an honest story."
+        text="We will share client experiences only when the words, names and project details are verified and approved for publication."
+      />
+      <section className="border-y border-border bg-secondary/45">
+        <div className="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8 lg:py-28">
+          <p className="eyebrow">No invented reviews</p>
+          <h2 className="mt-5 font-display text-3xl font-medium sm:text-4xl">
+            Client testimonials are being prepared with permission.
+          </h2>
+          <p className="mt-5 leading-7 text-muted-foreground">
+            There are no approved testimonials available to publish yet. We will not substitute
+            made-up quotes, names or ratings.
+          </p>
+          <Link to="/contact" className="mt-7 inline-flex items-center gap-2 text-sm font-semibold">
+            Talk with the team <ArrowRight className="size-4" />
+          </Link>
+        </div>
+      </section>
+      <CtaBand />
+    </>
+  );
+}
