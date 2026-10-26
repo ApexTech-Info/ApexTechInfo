@@ -1,4 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="MindLoom icon">
-  <rect width="64" height="64" rx="16" fill="#0b0d10"/>
-  <path d="M16 42V22h7.5c5.5 0 9.5 3.6 9.5 9.8S29 42 23.5 42H16zm7.3-6.7h1.9c2.9 0 4.8-1.8 4.8-4.9 0-3.1-1.9-4.9-4.8-4.9h-1.9v9.8zM34 42V22h6l8 12.7V22h5v20h-6L39 29.2V42h-5z" fill="#f6d94f"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 210">
+  <defs>
+    <linearGradient id="cyan" x1="50" y1="105" x2="112" y2="65" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00C6B7"/>
+      <stop offset="1" stop-color="#00B8C4"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="83" y1="127" x2="157" y2="127" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00C6B7"/>
+      <stop offset=".55" stop-color="#1769FF"/>
+      <stop offset="1" stop-color="#6938EF"/>
+    </linearGradient>
+    <linearGradient id="violet" x1="128" y1="65" x2="190" y2="105" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6938EF"/>
+      <stop offset="1" stop-color="#7135EE"/>
+    </linearGradient>
+    <linearGradient id="node-blue" x1="120" y1="2" x2="120" y2="70" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1769FF"/>
+      <stop offset="1" stop-color="#0875F9"/>
+    </linearGradient>
+  </defs>
+  <path d="M111 62C104 84 88 101 66 112" fill="none" stroke="url(#cyan)" stroke-linecap="round" stroke-width="25"/>
+  <path d="M129 62c7 22 23 39 45 50" fill="none" stroke="url(#violet)" stroke-linecap="round" stroke-width="25"/>
+  <path d="M77 132c27-17 59-17 86 0" fill="none" stroke="url(#blue)" stroke-linecap="round" stroke-width="25"/>
+  <circle cx="120" cy="36" r="36" fill="url(#node-blue)" stroke="#fff" stroke-width="4"/>
+  <circle cx="47" cy="139" r="36" fill="#00C6B7" stroke="#fff" stroke-width="4"/>
+  <circle cx="193" cy="139" r="36" fill="#6938EF" stroke="#fff" stroke-width="4"/>
 </svg>

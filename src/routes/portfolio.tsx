@@ -1,6 +1,71 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { CtaBand, PageIntro } from "@/components/site-shell";
-import { pageMeta, projects } from "@/lib/agency";
-export const Route = createFileRoute("/portfolio")({ head: () => pageMeta("Selected website projects", "Explore tailored websites created by Onda Studio for hospitality, architecture, and product businesses.", "/portfolio"), component: PortfolioPage });
-function PortfolioPage(){return <><PageIntro eyebrow="Selected work" title="Different businesses. Distinctive answers." text="Every project starts from the inside out: your ambition, your customers, and the thing only your business can offer."/><section className="mx-auto max-w-7xl px-5 pb-24 sm:px-8">{projects.map((p,i)=><article key={p.title} className={`grid gap-7 border-t border-border py-10 lg:grid-cols-2 lg:items-center ${i%2 ? "" : ""}`}><div className={i%2 ? "lg:order-2" : ""}><div className="overflow-hidden rounded-md"><img src={p.image} alt={p.alt} width={1408} height={1056} loading={i===0?undefined:"lazy"} className="aspect-[4/3] h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"/></div></div><div className="lg:px-10"><p className="eyebrow">0{i+1} · {p.category}</p><h2 className="mt-5 font-display text-4xl font-medium sm:text-5xl">{p.title}</h2><p className="mt-5 max-w-md text-lg leading-8 text-muted-foreground">A custom identity and digital experience shaped to bring clarity, confidence and momentum to a growing independent brand.</p><p className="mt-8 text-xl font-semibold text-primary">{p.result}</p><Link to="/contact" className="mt-7 inline-flex items-center gap-2 text-sm font-semibold">Create a project like this <ArrowUpRight className="size-4"/></Link></div></article>)}</section><CtaBand/></>}
+import { pageMeta } from "@/lib/agency";
+
+const categories = [
+  "All",
+  "Websites",
+  "Mobile Apps",
+  "Software",
+  "E-Commerce",
+  "Marketing & SEO",
+] as const;
+
+export const Route = createFileRoute("/portfolio")({
+  head: () =>
+    pageMeta(
+      "Our Work",
+      "Explore ApexTechInfo project case studies. Approved work and customer outcomes will be published here as they become available.",
+      "/portfolio",
+    ),
+  component: PortfolioPage,
+});
+
+function PortfolioPage() {
+  const [category, setCategory] = useState<(typeof categories)[number]>("All");
+  return (
+    <>
+      <PageIntro
+        eyebrow="Our work"
+        title="Useful work, honestly presented."
+        text="A case study should show the challenge, the decisions and what changed. We publish project details only when the work and outcomes are approved for sharing."
+      />
+      <section className="mx-auto max-w-7xl px-5 pb-20 sm:px-8 lg:pb-28">
+        <div className="flex flex-wrap gap-2" aria-label="Filter case studies">
+          {categories.map((item) => (
+            <button
+              key={item}
+              type="button"
+              aria-pressed={category === item}
+              onClick={() => setCategory(item)}
+              className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${category === item ? "border-primary bg-primary text-primary-foreground" : "border-border bg-background hover:border-primary hover:text-primary"}`}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+        <div className="mt-10 rounded-lg border border-dashed border-border bg-secondary/50 p-8 sm:p-12">
+          <p className="eyebrow">{category === "All" ? "Case studies" : category}</p>
+          <h2 className="mt-3 font-display text-3xl font-semibold">
+            No approved case studies published yet.
+          </h2>
+          <p className="mt-4 max-w-2xl leading-7 text-muted-foreground">
+            Project examples, client names, technologies and measurable results will appear here
+            once verified and approved. We won&apos;t present sample projects or unconfirmed
+            outcomes as customer work.
+          </p>
+          <Link
+            to="/contact"
+            search={{ package: "" }}
+            className="mt-6 inline-flex items-center gap-2 font-semibold text-primary"
+          >
+            Discuss your project <ArrowUpRight className="size-4" />
+          </Link>
+        </div>
+      </section>
+      <CtaBand />
+    </>
+  );
+}

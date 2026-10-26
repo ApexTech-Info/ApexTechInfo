@@ -1,5 +1,45 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowUpRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { CtaBand, PageIntro } from "@/components/site-shell";
-import { pageMeta, testimonials } from "@/lib/agency";
-export const Route=createFileRoute("/testimonials")({head:()=>pageMeta("Client stories","Hear from small-business founders who partnered with Onda Studio to build a stronger digital presence.","/testimonials"),component:TestimonialsPage});
-function TestimonialsPage(){return <><PageIntro eyebrow="Client stories" title="Good work creates momentum." text="The best measure of a website is what happens next: more confidence, clearer conversations and healthier business growth."/><section className="border-y border-border bg-secondary/50"><div className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28"><div className="grid gap-px overflow-hidden rounded-md border border-border bg-border md:grid-cols-2">{testimonials.map((t,i)=><figure key={t.name} className={`bg-background p-8 sm:p-10 ${i===0?"md:col-span-2":""}`}><span className="font-display text-5xl text-primary">“</span><blockquote className={`mt-3 font-display font-medium leading-tight ${i===0?"max-w-4xl text-3xl sm:text-5xl":"text-2xl sm:text-3xl"}`}>{t.quote}</blockquote><figcaption className="mt-8 text-sm"><strong>{t.name}</strong><span className="ml-2 text-muted-foreground">{t.role}</span></figcaption></figure>)}</div></div></section><section className="mx-auto max-w-7xl px-5 py-20 sm:px-8"><div className="grid grid-cols-2 gap-8 sm:grid-cols-4">{[["12+","years combined"],["40+","businesses launched"],["4.9/5","client feedback"],["72%","from referrals"]].map(([n,l])=><div key={l}><strong className="font-display text-4xl font-medium text-primary">{n}</strong><p className="mt-2 text-sm text-muted-foreground">{l}</p></div>)}</div></section><CtaBand/></>}
+import { pageMeta } from "@/lib/agency";
+
+export const Route = createFileRoute("/testimonials")({
+  head: () =>
+    pageMeta(
+      "Client Feedback",
+      "ApexTechInfo shares client feedback only when it has been verified and approved for publication.",
+      "/testimonials",
+    ),
+  component: TestimonialsPage,
+});
+
+function TestimonialsPage() {
+  return (
+    <>
+      <PageIntro
+        eyebrow="Client feedback"
+        title="Trust is built through the work."
+        text="We don’t publish invented reviews, ratings or client names. When verified customer feedback is approved for sharing, it will be presented here with the customer’s permission."
+      />
+      <section className="border-y border-border bg-secondary/50">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-24">
+          <div className="rounded-lg border border-dashed border-border bg-background p-8 sm:p-12">
+            <h2 className="font-display text-3xl font-semibold">No public testimonials yet.</h2>
+            <p className="mt-4 max-w-2xl leading-7 text-muted-foreground">
+              This page will be updated when ApexTechInfo has customer statements cleared for
+              publication. In the meantime, project scope, deliverables and communication
+              expectations are set out in writing before work begins.
+            </p>
+            <Button asChild className="mt-6">
+              <Link to="/contact" search={{ package: "" }}>
+                Talk through your project <ArrowUpRight />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+      <CtaBand />
+    </>
+  );
+}

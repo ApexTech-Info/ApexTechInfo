@@ -1,8 +1,59 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import { CtaBand, PageIntro } from "@/components/site-shell";
-import { pageMeta, services } from "@/lib/agency";
+import { pageMeta } from "@/lib/agency";
+import { serviceGroups } from "@/lib/services";
 
-export const Route = createFileRoute("/services")({ head: () => pageMeta("Web design services", "Strategy, bespoke web design, development, and ongoing care for independent businesses.", "/services"), component: ServicesPage });
-function ServicesPage() { return <><PageIntro eyebrow="What we do" title="One studio. Every step." text="From positioning to launch, we bring strategy, design and development together—so every decision serves the same clear idea." /><section className="border-y border-border bg-secondary/50"><div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:py-24">{services.map((s, i) => <article key={s.n} className="grid gap-7 border-t border-border py-10 first:border-t-0 lg:grid-cols-[5rem_.8fr_1fr]"><span className="text-sm text-primary">{s.n}</span><h2 className="font-display text-3xl font-medium sm:text-4xl">{s.title}</h2><div><p className="text-lg leading-8 text-muted-foreground">{s.text}</p><ul className="mt-6 grid gap-2 text-sm sm:grid-cols-2">{[["Audience insight","Positioning workshop"],["Design system","Responsive prototypes"],["Modern build","Content editing"],["Priority support","Performance reviews"]][i].map(x => <li key={x} className="flex items-center gap-2"><Check className="size-4 text-primary" />{x}</li>)}</ul></div></article>)}</div></section><section className="mx-auto max-w-7xl px-5 py-20 sm:px-8"><div className="grid gap-8 lg:grid-cols-2"><h2 className="font-display text-4xl font-medium sm:text-6xl">Simple process.<br />Serious attention.</h2><div className="grid gap-5">{["Discover what matters","Define one strong direction","Design, build and refine","Launch with confidence"].map((x,i)=><div key={x} className="flex items-center gap-5 border-b border-border pb-5"><span className="text-xs text-primary">0{i+1}</span><p className="text-lg font-medium">{x}</p></div>)}<Button asChild variant="dark" className="mt-3 w-fit"><Link to="/contact">Discuss your project <ArrowUpRight /></Link></Button></div></div></section><CtaBand /></> }
+export const Route = createFileRoute("/services")({
+  head: () =>
+    pageMeta(
+      "Digital Services",
+      "Website, app, software, design, marketing, SEO, automation and cloud services for growing businesses.",
+      "/services",
+    ),
+  component: ServicesPage,
+});
+
+function ServicesPage() {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  if (pathname !== "/services") return <Outlet />;
+
+  return (
+    <>
+      <PageIntro
+        eyebrow="Our services"
+        title="One team for the digital work ahead."
+        text="Choose a focused service or bring us a wider challenge. We begin by understanding your business, then agree what to design and build."
+      />
+      <section className="border-y border-border bg-secondary/50">
+        <div className="mx-auto max-w-7xl space-y-16 px-5 py-16 sm:px-8 lg:py-24">
+          {serviceGroups.map((group) => (
+            <div key={group.name}>
+              <p className="eyebrow">{group.name}</p>
+              <p className="mt-3 max-w-2xl text-muted-foreground">{group.description}</p>
+              <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {group.services.map((service) => (
+                  <article
+                    key={service.slug}
+                    className="rounded-lg border border-border bg-background p-6"
+                  >
+                    <h2 className="font-display text-2xl font-semibold">{service.title}</h2>
+                    <p className="mt-3 leading-7 text-muted-foreground">{service.summary}</p>
+                    <Link
+                      to="/services/$slug"
+                      params={{ slug: service.slug }}
+                      className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+                    >
+                      Explore service <ArrowRight className="size-4" />
+                    </Link>
+                  </article>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      <CtaBand />
+    </>
+  );
+}
